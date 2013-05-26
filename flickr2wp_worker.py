@@ -5,7 +5,17 @@ import flickrapi
 from jinja2 import Template
 
 API_KEY = '7fa8d2c3af054ab89adea2bd0220ae66'
-SIZE = 'Original'
+SIZES = {'Square 75': 'url_s',
+         'Square 150': 'url_q',
+         'Thumbnail': 'url_t',
+         'Small 240': 'url_s',
+         'Small 320': 'url_n',
+         'Medium 500': 'url_m',
+         'Medium 640': 'url_z',
+         'Medium 800': 'url_c',
+         'Large 1024': 'url_l',
+         'Large 1600': 'url_h',
+         'Original': 'url_o'}
 
 
 def main():
@@ -24,17 +34,17 @@ def find_set_id(text):
 
 def get_set_photos(set_id):
     """
-        Returns {'photo_title': 'title', 'href': 'http://...'} sequence.
+    Returns {'photo_title': 'title', 'href': 'http://...'} sequence.
     """
     flickr = flickrapi.FlickrAPI(API_KEY)
     photoset_photos = (flickr.photosets_getPhotos(api_key=API_KEY,
                                                   photoset_id=set_id,
-                                                  extras='url_o')
+                                                  extras=SIZES['Original'])
                              .getiterator('photo'))  # Python 2.6 compatibility
     for photo in photoset_photos:
         yield {'title': photo.attrib.get('title'),
                'alt': photo.attrib.get('title'),
-               'href': photo.attrib.get('url_o')}
+               'href': photo.attrib.get(SIZES['Original'])}
 
 
 def render_photos(photos):

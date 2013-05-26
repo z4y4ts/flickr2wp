@@ -17,7 +17,7 @@ TODO: Why filter is being triggered 3 times?
 TODO: Web auth?
 TODO: Make template editable through admin UI.
 TODO: Private photosets support.
-TODO: Add to wordpress photo
+TODO: Add to wordpress plugin directory.
 
 == Changelog ==
 
