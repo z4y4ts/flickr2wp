@@ -1,3 +1,4 @@
+import os
 import re
 import sys
 
@@ -39,12 +40,12 @@ def get_set_photos(set_id):
     flickr = flickrapi.FlickrAPI(API_KEY)
     photoset_photos = (flickr.photosets_getPhotos(api_key=API_KEY,
                                                   photoset_id=set_id,
-                                                  extras=SIZES['Original'])
+                                                  extras=SIZES['Medium 640'])
                              .getiterator('photo'))  # Python 2.6 compatibility
     for photo in photoset_photos:
         yield {'title': photo.attrib.get('title'),
                'alt': photo.attrib.get('title'),
-               'href': photo.attrib.get(SIZES['Original'])}
+               'href': photo.attrib.get(SIZES['Medium 640'])}
 
 
 def render_photos(photos):
