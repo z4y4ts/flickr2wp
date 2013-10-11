@@ -40,12 +40,16 @@ def get_set_photos(set_id):
     flickr = flickrapi.FlickrAPI(API_KEY)
     photoset_photos = (flickr.photosets_getPhotos(api_key=API_KEY,
                                                   photoset_id=set_id,
-                                                  extras=SIZES['Medium 640'])
+                                                  extras=(SIZES['Medium 640'], SIZES['Original']))
                              .getiterator('photo'))  # Python 2.6 compatibility
+    # for photo in sorted(photoset_photos, key=lambda p: p.attrig.get('title')):
     for photo in photoset_photos:
-        yield {'title': photo.attrib.get('title'),
-               'alt': photo.attrib.get('title'),
-               'href': photo.attrib.get(SIZES['Medium 640'])}
+        photo_url = photo.attrib.get(SIZES['Medium 640'])
+        if not photo_url:
+            photo_url = photo.attrib.get(SIZES['Original'])
+        yield {'title': photo.attrib.get('title').replace('-', ' '),
+               'alt': photo.attrib.get('title').replace('-', ' '),
+               'href': photo_url}
 
 
 def render_photos(photos):
