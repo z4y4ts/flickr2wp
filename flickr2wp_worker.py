@@ -53,7 +53,7 @@ def get_set_photos(set_id):
 
 
 def render_photos(photos):
-    with open('photoset-template.html', 'r') as f:
+    with open(os.path.join(os.path.dirname(__file__), 'photoset-template.html'), 'r') as f:
         template = Template(f.read())
     return template.render(photos=photos)
 
