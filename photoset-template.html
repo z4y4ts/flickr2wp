@@ -1,4 +1,4 @@
 {% for photo in photos %}
-    <img src="{{photo.href}}" alt="{{photo.alt}}" title="{{photo.title}}">
+    <a href="{{photo.fullsize_url}}" rel="lightbox"><img src="{{photo.href}}" alt="{{photo.alt}}" title="{{photo.title}}" /></a>
 
 {% endfor %}
