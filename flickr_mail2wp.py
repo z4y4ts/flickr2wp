@@ -28,6 +28,7 @@ def main():
     # create_new_post()
 
 
+logging.debug('Starting processing...')
 if __name__ == '__main__':
     main()
 
