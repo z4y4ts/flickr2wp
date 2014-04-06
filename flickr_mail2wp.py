@@ -35,7 +35,8 @@ def post_to_wordpress(title, content):
     post.title = title
     post.content = content
     logger.debug('Sending RPC call to wordpress...')
-    wp.call(NewPost(post))
+    post_id = wp.call(NewPost(post))
+    logger.debug('New post id = %s', post_id)
 
 def main():
     logger.info('Message received')
