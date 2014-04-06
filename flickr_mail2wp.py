@@ -23,8 +23,8 @@ logger.debug('Starting processing...')
 def get_user_set_from_email(raw_email):
     match = re.search(FLICKR_SET_URL, raw_email)
     if match:
-        user_id, set_id, set_name = match.groups()
-        return user_id, set_id, set_name
+        user_id, set_id = match.groups()
+        return user_id, set_id, 'My awesome photo set!'
     else:
         raise Exception("Can't find user & set in email text.")
 
@@ -38,6 +38,7 @@ def post_to_wordpress(title, content):
 def main():
     logger.info('Message received')
     content = sys.stdin.read()
+    logger.debug(content)
     user_id, set_id, set_name = get_user_set_from_email(content)
     photos = get_set_photos(set_id)
     logger.debug('Creating new draft post.')
