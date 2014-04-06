@@ -30,6 +30,7 @@ def get_user_set_from_email(raw_email):
         raise Exception("Can't find user & set in email text.")
 
 def post_to_wordpress(title, content):
+    logger.debug('Logging to %s as %s', WP_RPC_URL, WP_USER)
     wp = Client(WP_RPC_URL, WP_USER, WP_PASS)
     post = WordPressPost()
     post.title = title
