@@ -34,7 +34,8 @@ def post_to_wordpress(title, content):
     post = WordPressPost()
     post.title = title
     post.content = content
-    logger.debug('Sending RPC call to wordpress...')
+    logger.debug('Sending RPC call to %s wordpress as %s user...',
+                 WP_RPC_URL, WP_USER)
     post_id = wp.call(NewPost(post))
     logger.debug('New post id = %s', post_id)
 
