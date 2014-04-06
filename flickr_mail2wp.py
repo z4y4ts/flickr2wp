@@ -8,7 +8,7 @@ from wordpress_xmlrpc import Client
 from wordpress_xmlrpc.methods.posts import NewPost, WordPressPost
 from flickr2wp_worker import get_set_photos, render_photos
 
-FLICKR_SET_URL = r'https://www.flickr.com/.+/photos/(?P<user>\w+)/sets/(?P<set>\d+)/'
+FLICKR_SET_URL = r'([\w ]*)\nhttps://www.flickr.com/.+/photos/(?P<user>\w+)/sets/(?P<set>\d+)/'
 WP_RPC_URL = 'http://example.com/xmlrpc.php'
 WP_USER = 'user'
 WP_PASS = 'pass'
@@ -23,8 +23,8 @@ logger.debug('Starting processing...')
 def get_user_set_from_email(raw_email):
     match = re.search(FLICKR_SET_URL, raw_email)
     if match:
-        user_id, set_id = match.groups()
-        return user_id, set_id, 'My awesome photo set!'
+        title, user_id, set_id = match.groups()
+        return user_id, set_id, title
     else:
         raise Exception("Can't find user & set in email text.")
 
