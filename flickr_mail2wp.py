@@ -34,6 +34,7 @@ def post_to_wordpress(title, content):
     post = WordPressPost()
     post.title = title
     post.content = content
+    logger.debug('Sending RPC call to wordpress...')
     wp.call(NewPost(post))
 
 def main():
@@ -42,13 +43,13 @@ def main():
     logger.debug(content)
     user_id, set_id, set_name = get_user_set_from_email(content)
     photos = get_set_photos(set_id)
-    logger.debug('Creating new draft post.')
+    logger.debug('Rendering post content...')
     content = render_photos(photos)
+    logger.debug('Creating new draft post...')
     post_to_wordpress(set_name, content)
     logger.info('Success!')
 
 
-logger.debug('Starting processing...')
 if __name__ == '__main__':
     main()
 
