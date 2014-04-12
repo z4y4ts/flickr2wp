@@ -9,7 +9,7 @@ from wordpress_xmlrpc import Client
 from wordpress_xmlrpc.methods.posts import NewPost, WordPressPost
 from flickr2wp_worker import get_set_photos, render_photos
 
-FLICKR_SET_URL = r'([\w ]*)\nhttps://www.flickr.com/.+/photos/(?P<user>[\w@]+)/sets/(?P<set>\d+)/'
+FLICKR_SET_URL = r'([\w ]*)\nhttps?://www.flickr.com/.+/photos/(?P<user>[\w@]+)/sets/(?P<set>\d+)/'
 WP_RPC_URL = os.environ.get('WP_RPC_URL', 'http://example.com/xmlrpc.php')
 WP_USER = os.environ.get('WP_USER', 'user')
 WP_PASS = os.environ.get('WP_PASS', 'pass')
@@ -22,7 +22,7 @@ logger.addHandler(fh)
 logger.debug('Starting processing...')
 
 def get_user_set_from_email(raw_email):
-    match = re.search(FLICKR_SET_URL, raw_email)
+    match = re.search(FLICKR_SET_URL, raw_email, re.UNICODE)
     if match:
         title, user_id, set_id = match.groups()
         return user_id, set_id, title
